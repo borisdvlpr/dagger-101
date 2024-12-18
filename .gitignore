@@ -22,6 +22,10 @@ go.work.sum
 /hello-rust/debug
 /hello-rust/target
 /hello-rust/Cargo.lock
+/hello-rust/output
+
+# dagger
+/output
 
 # env file
 .env
