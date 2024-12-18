@@ -1,0 +1,34 @@
+# go binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# go test binary, built with `go test -c`
+*.test
+
+# go output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# dependency directories (remove the comment below to include it)
+# vendor/
+
+# go workspace file
+go.work
+go.work.sum
+
+# rust
+/hello-rust/debug
+/hello-rust/target
+/hello-rust/Cargo.lock
+
+# env file
+.env
+
+# editor
+.vscode
+.idea/*
+
+# system
+.DS_Store
