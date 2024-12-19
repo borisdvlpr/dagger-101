@@ -35,3 +35,27 @@ According to [older versions of the Go SDK Documentation](https://archive.docs.d
 5. When all operations in the pipeline have been resolved, the engine sends the pipeline result back to your program.
 6. Your program may use the pipeline's result as input to new pipelines.
 
+## Dagger Pipeline Implementation
+
+This Dagger pipeline sets up a simple process to build and run a Rust project. Here’s how it works:
+
+- Context creation: it starts by creating a background context to manage the pipeline’s execution.
+- Connection to Dagger: the pipeline connects to Dagger’s API, which allows it to interact with containers and files.
+- Rust container setup: it pulls the `rust:alpine` image and mounts a local project directory (`hello-rust`) into the container. Then, it checks if Rust is installed by running `cargo --version`.
+- Building and running: the working directory is set to `/hello-rust`, and the pipeline runs `cargo r` to build and execute the Rust project.
+- Output export: finally, the container’s `output` directory is exported to the host machine.
+
+In order to run this pipeline locally, the command `dagger run go run pipeline.go` should be run on the terminal where the `pipeline.go` file is located.
+
+## GitHub Actions Integration
+
+Here's how the GitHub workflow was set up to integrate with Dagger:
+
+- Pipeline trigger: the pipeline runs whenever there’s a push to the `main` branch, or it can be triggered manually using GitHub’s workflow dispatch.
+- Repository checkout
+- Go setup: the pipeline sets up Go using `actions/setup-go`, preparing the environment for running Go code.
+- Dagger pipeline run: the main step uses the Dagger GitHub Action (`dagger/dagger-for-github`) to execute the pipeline. It specifies:
+   - The working directory as the current directory (`.`).
+   - The `run` command to trigger the pipeline’s execution.
+   - The running arguments `go run pipeline.go` to start the pipeline defined in the Go file.
+   - The version of Dagger to ensure compatibility.
